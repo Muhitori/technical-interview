@@ -16,6 +16,7 @@ interface Props {
 
 export const InputColumn: FC<Props> = ({ context, type }) => {
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const [error, setError] = useState(false);
 
 	const {
 		getValue,
@@ -31,6 +32,14 @@ export const InputColumn: FC<Props> = ({ context, type }) => {
 		if (value === initialValue) return;
 
 		const finalValue = type === "text" ? value : Number(value);
+
+		if ((finalValue as string) === "" || (finalValue as number) < 1) {
+			setError(true);
+			return;
+		}
+
+		setError(false);
+
 		table.options.meta?.updateData(row.original.id, id, finalValue);
 	};
 
@@ -43,6 +52,8 @@ export const InputColumn: FC<Props> = ({ context, type }) => {
 			inputRef={inputRef}
 			type={type || "text"}
 			variant='standard'
+			error={error}
+			sx={{ border: error ? "1px solid red" : "" }}
 			InputProps={{
 				disableUnderline: true,
 			}}
