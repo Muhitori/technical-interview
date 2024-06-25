@@ -4,6 +4,7 @@ import { useSnackbar, VariantType, ProviderContext } from "notistack";
 let useSnackbarRef: ProviderContext;
 export const SnackbarGenerator: React.FC = () => {
 	useSnackbarRef = useSnackbar();
+
 	return null;
 };
 
